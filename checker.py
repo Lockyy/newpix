@@ -6,7 +6,7 @@ import urllib2
 import sys
 import os
 
-class newpixchecker(object):
+class checker(object):
 
 	def __init__(self):
 		self.NEWPIX = 20
