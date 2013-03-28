@@ -21,7 +21,7 @@ class checker(object):
 
 		# Ensure that we log the first image.
 		oldURL = self.getRedirectURL(self.IMAGEURL)
-		self.newImageFound(oldURL)
+		self.newImageFound(oldURL, False)
 
 		while not datetime.datetime.utcnow().minute == 3 and not datetime.datetime.utcnow().minute == 33:
 			time.sleep(60)
@@ -34,7 +34,6 @@ class checker(object):
 			# Get the current url that time.png gets redirected to.
 			newURL = self.getRedirectURL(self.IMAGEURL)
 			# If the newURL isn't the same as the old URL then there has been a change!
-			# Handle this.
 			if not newURL == oldURL:
 				oldURL = newURL
 				self.newImageFound(newURL)
@@ -57,7 +56,7 @@ class checker(object):
 		output += str(dateTime.minute)
 		return output
  
-	def newImageFound(self, url):
+	def newImageFound(self, url, sleep = True):
 		datetime = self.getDateTimeString()
 		urlHash = url.rsplit('/', 1)[1]
 		filepath = "images/" + datetime + " " + urlHash
@@ -67,4 +66,5 @@ class checker(object):
 		pygame.mixer.Sound(self.SOUNDPATH).play()
 		image = urllib.URLopener()
 		image.retrieve(url, filepath)
-		time.sleep(self.NEWPIX * self.MINUTE)
+		if sleep == True:
+			time.sleep(self.NEWPIX * self.MINUTE)
