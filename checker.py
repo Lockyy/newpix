@@ -49,16 +49,24 @@ class checker(object):
 
 	def getDateTimeString(self):
 		dateTime = datetime.datetime.utcnow()
-		return dateTime.isoformat(" ")
+		output = str(dateTime.year) + "-"
+		output += str(dateTime.month) + "-"
+		output += str(dateTime.day) + " "
+		# I wish osx would just let me use :s in filepaths
+		output += str(dateTime.hour) + ","
+		output += str(dateTime.minute)
+		return output
  
 	def newImageFound(self, url):
 		datetime = self.getDateTimeString()
-		fileName = url.rsplit('/', 1)[1]
+		urlHash = url.rsplit('/', 1)[1]
+		filepath = "images/" + datetime + " " + urlHash
 		# Make sure we aren't redownloading an existing image.
-		if not os.path.exists("images/" + fileName):
+		if not os.path.exists(filepath):
 			print "New image found at " + datetime
-			print "Hash of new image is " + fileName
+			print "Hash of new image is " + urlHash
+			print "New image saved at " + filepath
 			pygame.mixer.Sound(self.SOUNDPATH).play()
 			image = urllib.URLopener()
-			image.retrieve(url, "images/" + fileName)
+			image.retrieve(url, filepath)
 			time.sleep(self.NEWPIX * self.MINUTE)
