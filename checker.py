@@ -61,12 +61,10 @@ class checker(object):
 		datetime = self.getDateTimeString()
 		urlHash = url.rsplit('/', 1)[1]
 		filepath = "images/" + datetime + " " + urlHash
-		# Make sure we aren't redownloading an existing image.
-		if not os.path.exists(filepath):
-			print "New image found at " + datetime
-			print "Hash of new image is " + urlHash
-			print "New image saved at " + filepath
-			pygame.mixer.Sound(self.SOUNDPATH).play()
-			image = urllib.URLopener()
-			image.retrieve(url, filepath)
-			time.sleep(self.NEWPIX * self.MINUTE)
+		print "New image found at " + datetime
+		print "Hash of new image is " + urlHash
+		print "New image saved at " + filepath
+		pygame.mixer.Sound(self.SOUNDPATH).play()
+		image = urllib.URLopener()
+		image.retrieve(url, filepath)
+		time.sleep(self.NEWPIX * self.MINUTE)
