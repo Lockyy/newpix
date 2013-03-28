@@ -4,6 +4,7 @@ import time
 import urllib
 import urllib2
 import sys
+import os
 
 class newpixchecker(object):
 
@@ -19,7 +20,11 @@ class newpixchecker(object):
 		pygame.mixer.init()
 
 		# Ensure that we log the first image.
-		oldURL = None
+		oldURL = self.getRedirectURL(self.IMAGEURL)
+		self.newImageFound(oldURL)
+
+		while not datetime.datetime.utcnow().minute == 3 and not datetime.datetime.utcnow().minute == 33:
+			time.sleep(60)
 
 		while True:
 			# Get the datetime
@@ -48,9 +53,12 @@ class newpixchecker(object):
  
 	def newImageFound(self, url):
 		datetime = self.getDateTimeString()
-		print "New image found at " + datetime
-		print "Hash of new image is " + url.rsplit('/', 1)[1]
-		pygame.mixer.Sound(self.SOUNDPATH).play()
-		image = urllib.URLopener()
-		image.retrieve(url, "images/" + datetime + ".png")
-		time.sleep(self.NEWPIX * self.MINUTE)
+		fileName = url.rsplit('/', 1)[1]
+		# Make sure we aren't redownloading an existing image.
+		if not os.path.exists("images/" + fileName):
+			print "New image found at " + datetime
+			print "Hash of new image is " + fileName
+			pygame.mixer.Sound(self.SOUNDPATH).play()
+			image = urllib.URLopener()
+			image.retrieve(url, "images/" + fileName)
+			time.sleep(self.NEWPIX * self.MINUTE)
