@@ -11,5 +11,5 @@ while True:
 	d = datetime.datetime.now()
 	if d.minute in updateTimes:
 		pygame.mixer.Sound('sound.wav').play()
-		# Ensure the ping only goes off once per update.
-		time.sleep(120)
+	# Only check once per minute. Also ensures that sound only places once a minute.
+	time.sleep(60)
