@@ -49,10 +49,16 @@ class checker(object):
 	def getDateTimeString(self):
 		dateTime = datetime.datetime.utcnow()
 		output = str(dateTime.year) + "-"
+		if dateTime.month < 10:
+			output += "0"
 		output += str(dateTime.month) + "-"
 		output += str(dateTime.day) + " "
 		# I wish osx would just let me use :s in filepaths
-		output += str(dateTime.hour) + ","
+		if dateTime.hour < 10:
+			output += "0"
+		output += str(dateTime.hour) + "-"
+		if dateTime.minute < 10:
+			output += "0"
 		output += str(dateTime.minute)
 		return output
  
@@ -61,8 +67,8 @@ class checker(object):
 		urlHash = url.rsplit('/', 1)[1]
 		filepath = "images/" + datetime + " " + urlHash
 		print "New image found at " + datetime
-		print "Hash of new image is " + urlHash
-		print "New image saved at " + filepath
+		print "URL hash of image is " + urlHash
+		print "Image saved at " + filepath
 		pygame.mixer.Sound(self.SOUNDPATH).play()
 		image = urllib.URLopener()
 		image.retrieve(url, filepath)
