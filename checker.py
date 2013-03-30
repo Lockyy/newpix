@@ -9,7 +9,6 @@ import os
 class checker(object):
 
 	def __init__(self):
-		self.NEWPIX = 20
 		self.MINUTE = 60
 		# URL to grab image from.
 		self.IMAGEURL = "http://imgs.xkcd.com/comics/time.png"
@@ -87,8 +86,6 @@ class checker(object):
 			pygame.mixer.Sound(self.SOUNDPATH).play()
 			image = urllib.URLopener()
 			image.retrieve(url, filepath)
-			if sleep == True:
-				time.sleep(self.NEWPIX * self.MINUTE)
 		else:
 			print "[" + datetime + "]"
 			print "Duplicate image found."
