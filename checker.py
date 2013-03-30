@@ -1,10 +1,13 @@
-import pygame
 import datetime
 import time
 import urllib
 import urllib2
 import sys
 import os
+try:
+	import pygame
+except:
+	pass
 
 class checker(object):
 
@@ -14,22 +17,26 @@ class checker(object):
 		self.IMAGEURL = "http://imgs.xkcd.com/comics/time.png"
 		# File path of sound file.
 		self.SOUNDPATH = "sound.wav"
+		# Check if pygame imported correct, if it did then we can play the ping.
+		if "pygame" in sys.modules:
+			self.pygame = True
 		
 	def main(self):
-		pygame.mixer.init()
+		if self.pygame:
+			pygame.mixer.init()
 
 		# Ensure that we log the first image.
 		oldURL = self.getRedirectURL(self.IMAGEURL)
 		self.newImageFound(oldURL, False)
 
-		while not datetime.datetime.utcnow().minute == 3 and not datetime.datetime.utcnow().minute == 33:
-			time.sleep(60)
+		lastMinute = datetime.datetime.utcnow().minute
+
+		while datetime.datetime.utcnow().minute == lastMinute:
+			time.sleep(1)
 
 		while True:
-			# Get the datetime
-			dateTime = datetime.datetime.utcnow()
 			# Get the current minute.
-			currentMinute = dateTime.minute
+			currentMinute = datetime.datetime.utcnow().minute
 			# Get the current url that time.png gets redirected to.
 			newURL = self.getRedirectURL(self.IMAGEURL)
 			# If the newURL isn't the same as the old URL then there has been a change!
@@ -83,7 +90,8 @@ class checker(object):
 			print "New image found"
 			print urlHash
 			print "Image saved at " + filepath + "\n"
-			pygame.mixer.Sound(self.SOUNDPATH).play()
+			if self.pygame:
+				pygame.mixer.Sound(self.SOUNDPATH).play()
 			image = urllib.URLopener()
 			image.retrieve(url, filepath)
 		else:
