@@ -79,10 +79,10 @@ class checker(object):
 		urlHash = url.rsplit('/', 1)[1]
 
 		imageExists = False
-
-		for image in os.listdir("images"):
-			if image[17:] == urlHash:
-				imageExists = True
+		if not os.listdir("images") == []:
+			for image in os.listdir("images"):
+				if image[17:] == urlHash:
+					imageExists = True
 
 		if not imageExists:
 			filepath = "images/" + datetime + " " + urlHash
