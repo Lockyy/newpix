@@ -20,6 +20,7 @@ class checker(object):
 		# Check if pygame imported correct, if it did then we can play the ping.
 		if "pygame" in sys.modules:
 			self.pygame = True
+		self.saveIntoRepo = True
 		
 	def main(self):
 		if self.pygame:
@@ -106,7 +107,8 @@ class checker(object):
 				pygame.mixer.Sound(self.SOUNDPATH).play()
 			grabber = urllib.URLopener()
 			grabber.retrieve(url, filepath)
-			grabber.retrieve(url, self.getGitFilePath())
+			if self.saveIntoRepo == True:
+				grabber.retrieve(url, self.getGitFilePath())
 		else:
 			print "[" + datetime + "]"
 			print "Duplicate image found."
