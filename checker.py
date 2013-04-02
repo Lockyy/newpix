@@ -75,6 +75,16 @@ class checker(object):
 			output += "0"
 		output += str(dateTime.minute)
 		return output
+
+	def getGitFilePath(self):
+		images = os.listdir("xkcdTimeImages")
+		lastImage = images[len(images) - 1]
+		imageList = lastImage.split(".", 1)
+		imageList = imageList[0].split("Time", 1)
+		output = int(imageList[1])
+		output += 1
+		output = "Time" + str(output) + ".png"
+		return output
  
 	def newImageFound(self, url, sleep = True):
 		datetime = self.getDateTimeString()
@@ -94,8 +104,9 @@ class checker(object):
 			print "Image saved at " + filepath + "\n"
 			if self.pygame:
 				pygame.mixer.Sound(self.SOUNDPATH).play()
-			image = urllib.URLopener()
-			image.retrieve(url, filepath)
+			grabber = urllib.URLopener()
+			grabber.retrieve(url, filepath)
+			grabber.retrieve(url, self.getGitFilePath())
 		else:
 			print "[" + datetime + "]"
 			print "Duplicate image found."
