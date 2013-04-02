@@ -64,6 +64,8 @@ class checker(object):
 		if dateTime.month < 10:
 			output += "0"
 		output += str(dateTime.month) + "-"
+		if dateTime.day < 10:
+			output += "0"
 		output += str(dateTime.day) + " "
 		# I wish osx would just let me use :s in filepaths
 		if dateTime.hour < 10:
