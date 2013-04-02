@@ -102,13 +102,16 @@ class checker(object):
 			print "[" + datetime + "]"
 			print "New image found"
 			print urlHash
-			print "Image saved at " + filepath + "\n"
+			print "Image saved at " + filepath
 			if self.pygame:
 				pygame.mixer.Sound(self.SOUNDPATH).play()
 			grabber = urllib.URLopener()
 			grabber.retrieve(url, filepath)
 			if self.saveIntoRepo == True:
-				grabber.retrieve(url, self.getGitFilePath())
+				gitFilePath = self.getGitFilePath()
+				print "Image saved at " + gitFilePath
+				grabber.retrieve(url, gitFilePath)
+			print "\n"
 		else:
 			print "[" + datetime + "]"
 			print "Duplicate image found."
