@@ -84,7 +84,7 @@ class checker(object):
 		imageList = imageList[0].split("Time", 1)
 		output = int(imageList[1])
 		output += 1
-		output = "Time" + str(output) + ".png"
+		output = "xkcdTimeImages/Time" + str(output) + ".png"
 		return output
  
 	def newImageFound(self, url, sleep = True):
@@ -107,7 +107,7 @@ class checker(object):
 				pygame.mixer.Sound(self.SOUNDPATH).play()
 			grabber = urllib.URLopener()
 			grabber.retrieve(url, filepath)
-			if self.saveIntoRepo == True:
+			if self.saveIntoRepo:
 				gitFilePath = self.getGitFilePath()
 				print "Image saved at " + gitFilePath
 				grabber.retrieve(url, gitFilePath)
