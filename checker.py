@@ -79,12 +79,17 @@ class checker(object):
 
 	def getGitFilePath(self):
 		images = os.listdir("xkcdTimeImages")
-		lastImage = images[len(images) - 1]
-		imageList = lastImage.split(".", 1)
-		imageList = imageList[0].split("Time", 1)
-		output = int(imageList[1])
-		output += 1
-		output = "xkcdTimeImages/Time" + str(output) + ".png"
+		latestImage = 0
+		for image in images:
+			if not image[0] == "T":
+				continue
+			imageList = image.split(".", 1)
+			imageList = imageList[0].split("Time", 1)
+			imageNumber = int(imageList[1])
+			if imageNumber > latestImage:
+				latestImage = imageNumber
+		latestImage += 1
+		output = "xkcdTimeImages/Time" + str(latestImage) + ".png"
 		return output
  
 	def newImageFound(self, url, sleep = True):
