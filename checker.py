@@ -11,19 +11,17 @@ except:
 
 class checker(object):
 
-	def __init__(self):
+	def __init__(self, gitOutput, sound):
 		self.MINUTE = 60
 		# URL to grab image from.
 		self.IMAGEURL = "http://imgs.xkcd.com/comics/time.png"
 		# File path of sound file.
 		self.SOUNDPATH = "sound.wav"
-		# Check if pygame imported correct, if it did then we can play the ping.
-		if "pygame" in sys.modules:
-			self.pygame = True
-		self.saveIntoRepo = True
+		self.gitOutput = gitOutput
+		self.sound = sound
 		
 	def main(self):
-		if self.pygame:
+		if self.sound:
 			pygame.mixer.init()
 
 		# Ensure that we log the first image.
@@ -108,11 +106,11 @@ class checker(object):
 			print "New image found"
 			print urlHash
 			print "Image saved at " + filepath
-			if self.pygame:
+			if self.sound:
 				pygame.mixer.Sound(self.SOUNDPATH).play()
 			grabber = urllib.URLopener()
 			grabber.retrieve(url, filepath)
-			if self.saveIntoRepo:
+			if self.gitOutput:
 				gitFilePath = self.getGitFilePath()
 				print "Image saved at " + gitFilePath
 				grabber.retrieve(url, gitFilePath)
