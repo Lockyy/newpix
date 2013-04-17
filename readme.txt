@@ -17,6 +17,9 @@ The program will save images to ./xkcdTimeImages as well as ./images, this can b
 
 ======
 
-Cmd line arguments:
-
--t    :     Logged output will also output to the terminal
+optional arguments:
+	-h, --help	show this help message and exit
+	-t					Turns console output on.
+	-l					Turns logging off.
+	-g					Turns output to xkcdTimeImages folder off.
+	-s					Turns sound on. Will beep whenever an image is found.
