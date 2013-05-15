@@ -24,7 +24,7 @@ if __name__ == '__main__':
 	settings = parser.parse_args()
 
 	if not "pygame" in sys.modules:
-		self.sound = False
+		settings.sound = False
 
 	sys.stdout = logger.logger(settings.outputToTerminal, settings.logFileLogging)
 	checker = checker.checker(settings.gitOutput, settings.sound)
